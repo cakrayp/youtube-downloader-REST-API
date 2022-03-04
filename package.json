@@ -1,0 +1,28 @@
+{
+  "name": "youtube-downloader-scrape-api",
+  "version": "2.0.4",
+  "description": "Make something for scrape to get link downloader",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cakrayp/youtube-downloader-REST-API.git"
+  },
+  "author": "Cakra Yudha Pratama",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cakrayp/youtube-downloader-REST-API/issues"
+  },
+  "homepage": "https://github.com/cakrayp/youtube-downloader-REST-API#readme",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "cheerio": "^1.0.0-rc.10",
+    "express": "^4.17.3",
+    "fetch": "^1.1.0",
+    "node": "^17.5.0",
+    "node-fetch": "^2.6.1"
+  }
+}
