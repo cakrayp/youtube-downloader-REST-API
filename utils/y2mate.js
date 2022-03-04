@@ -113,9 +113,12 @@ function getAudioWithy2mate(link) {
                 // let title = $('div.thumbnail.cover > div > b').text();
                 // let size = $('#mp3 > table > tbody > tr:nth-child(3) > td:nth-child(2)').text()
                 let id = /var k__id = "(.*?)"/.exec(data.result)[1]
-                const getTable = $('#mp3').find('tbody > tr')
+                const getTypeSelection = $('li')[1]
+                const checkType = $(getTypeSelection).find('a').attr('href')
+                const getTable = $(checkType).find('tbody > tr')
+                const changeTypeAudio = $($(getTable).find('td')[2]).find('a').attr('data-ftype')
                 let list_quality = new Array();
-                let list_videoMeta = new Array();
+                let list_audioMeta = new Array();
                 $(getTable).each(async (i, elem) => {
                     const ColumnTable__quality = $(elem).find('td')[0]  //  For Quality
                     const ColumnTable__filesize = $(elem).find('td')[1]  //  For FileSize
@@ -125,10 +128,11 @@ function getAudioWithy2mate(link) {
                         v_id: url[1],
                         ajax: 1,
                         token: '',
-                        ftype: 'mp3',
+                        ftype: changeTypeAudio,
                         fquality: $($(elem).find('td')[2]).find('a').attr('data-fquality')
                     }
-                    $($(elem).find('td')[2]).find('a').attr('data-ftype') == 'mp3' ? list_quality.push({
+                    const isAudio = $($(elem).find('td')[2]).find('a').attr('data-ftype') == changeTypeAudio
+                    isAudio ? list_quality.push({
                         configs_mp3,
                         quality: $(ColumnTable__quality).text().trim(),
                         size: $(ColumnTable__filesize).text().trim(),
@@ -142,14 +146,14 @@ function getAudioWithy2mate(link) {
                     })
                         .then(({ data }) => {
                             const getLink = /<a.+?href="(.+?)"/.exec(data.result)[1]
-                            list_videoMeta.push({
+                            list_audioMeta.push({
                                 quality: list_quality[i].quality,
                                 size: list_quality[i].size,
                                 download: getLink
                             })
                         })
                 }
-                resolve(list_videoMeta)
+                resolve(list_audioMeta)
             })
             .catch(err => {
                 reject({

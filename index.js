@@ -12,6 +12,7 @@ const {
     tubemp3
 } = require('./utils/index')
 
+app.set("json spaces", 4)
 
 app.get('/', async (req, res) => {
     const link_gitub = "https://github.com/cakrayp/youtube-downloader-REST-API.git"
@@ -41,14 +42,14 @@ app.get('/youtube/downloader/:Mimetype', async (req, res) => {
                                     message: "This video is streaming live, and it cannot get download link URLs"
                                 }
                             } else {
-                                try { var getLinkTubemp3 = await tubemp3.getVideoWithTubeMp3(ytVideoId[0]) } catch (err) { var getLinkTubemp3 = err.message }
-                                try { var getLinkTy2mate = await y2mate.getVideoWithy2mate(ytVideoId[0]) } catch (err) { var getLinkTy2mate = err.message }
+                                try { var getLinkTubemp3 = await tubemp3.getVideoWithTubeMp3(`https://youtu.be/${ytVideoId[1]}`) } catch (err) { var getLinkTubemp3 = err.message }
+                                try { var getLinkTy2mate = await y2mate.getVideoWithy2mate(`https://youtu.be/${ytVideoId[1]}`) } catch (err) { var getLinkTy2mate = err.message }
                                 getLinkDownloader = {
                                     tubemp3_biz: getLinkTubemp3,
                                     y2mate: getLinkTy2mate,
                                 }
                             }
-                            res.json(getLinkDownloader)
+                            res.json({status: 200, creator: "@cakrayp_jhn", result: getLinkDownloader})
                         } else {
                             const { publishedAt, channelId, title, description, thumbnails, channelTitle, liveBroadcastContent } = data.items[0].snippet;
                             const { viewCount, likeCount, dislikeCount, favoriteCount, commentCount } = data.items[0].statistics
@@ -63,8 +64,8 @@ app.get('/youtube/downloader/:Mimetype', async (req, res) => {
                                     message: "This video is streaming live, and it cannot get download link URLs"
                                 }
                             } else {
-                                try { var getLinkTubemp3 = await tubemp3.getVideoWithTubeMp3(ytVideoId[0]) } catch (err) { var getLinkTubemp3 = err.message }
-                                try { var getLinkTy2mate = await y2mate.getVideoWithy2mate(ytVideoId[0]) } catch (err) { var getLinkTy2mate = err.message }
+                                try { var getLinkTubemp3 = await tubemp3.getVideoWithTubeMp3(`https://youtu.be/${ytVideoId[1]}`) } catch (err) { var getLinkTubemp3 = err.message }
+                                try { var getLinkTy2mate = await y2mate.getVideoWithy2mate(`https://youtu.be/${ytVideoId[1]}`) } catch (err) { var getLinkTy2mate = err.message }
                                 getLinkDownloader = {
                                     tubemp3_biz: getLinkTubemp3,
                                     y2mate: getLinkTy2mate,
@@ -122,14 +123,14 @@ app.get('/youtube/downloader/:Mimetype', async (req, res) => {
                                     message: "This video is streaming live, and it cannot get download link URLs"
                                 }
                             } else {
-                                try { var getLinkTubemp3 = await tubemp3.getVideoWithTubeMp3(ytVideoId[0]) } catch (err) { var getLinkTubemp3 = err.message }
-                                try { var getLinkTy2mate = await y2mate.getVideoWithy2mate(ytVideoId[0]) } catch (err) { var getLinkTy2mate = err.message }
+                                try { var getLinkTubemp3 = await tubemp3.getAudioWithTubeMp3(`https://youtu.be/${ytVideoId[1]}`) } catch (err) { var getLinkTubemp3 = err.message }
+                                try { var getLinkTy2mate = await y2mate.getAudioWithy2mate(`https://youtu.be/${ytVideoId[1]}`) } catch (err) { var getLinkTy2mate = err.message }
                                 getLinkDownloader = {
                                     tubemp3_biz: getLinkTubemp3,
                                     y2mate: getLinkTy2mate,
                                 }
                             }
-                            res.json(getLinkDownloader)
+                            res.json({status: 200, creator: "@cakrayp_jhn", result: getLinkDownloader})
                         } else {
                             const { publishedAt, channelId, title, description, thumbnails, channelTitle, liveBroadcastContent } = data.items[0].snippet;
                             const { viewCount, likeCount, dislikeCount, favoriteCount, commentCount } = data.items[0].statistics
@@ -144,8 +145,8 @@ app.get('/youtube/downloader/:Mimetype', async (req, res) => {
                                     message: "This video is streaming live, and it cannot get download link URLs"
                                 }
                             } else {
-                                try { var getLinkTubemp3 = await tubemp3.getAudioWithTubeMp3(ytVideoId[0]) } catch (err) { var getLinkTubemp3 = err.message }
-                                try { var getLinkTy2mate = await y2mate.getAudioWithy2mate(ytVideoId[0]) } catch (err) { var getLinkTy2mate = err.message }
+                                try { var getLinkTubemp3 = await tubemp3.getAudioWithTubeMp3(`https://youtu.be/${ytVideoId[1]}`) } catch (err) { var getLinkTubemp3 = err.message }
+                                try { var getLinkTy2mate = await y2mate.getAudioWithy2mate(`https://youtu.be/${ytVideoId[1]}`) } catch (err) { var getLinkTy2mate = err.message }
                                 getLinkDownloader = {
                                     tubemp3_biz: getLinkTubemp3,
                                     y2mate: getLinkTy2mate,
