@@ -19,7 +19,7 @@ app.get('/', async (req, res) => {
     res.send(`<code>Hello Welcome to My youtube Rest API, Please read in Documentation. <a href="${link_gitub}">"${link_gitub}"</a></code0`)
 })
 
-app.get('/youtube/downloader/:Mimetype', async (req, res) => {
+app.get('/youtube/downloader/:Mimetype', async (req, res, next) => {
     var mediaType = req.params.Mimetype,
         videoIdWithURL = req.query.url,
         responsetype = req.query.responsetype
@@ -96,6 +96,7 @@ app.get('/youtube/downloader/:Mimetype', async (req, res) => {
                             })
                         }
                     }).catch(err => {
+                        console.log(err)
                         res.json({
                             status: 406,
                             creator: "@cakrayp_jhn",
@@ -191,6 +192,9 @@ app.get('/youtube/downloader/:Mimetype', async (req, res) => {
                 })
             }
             break;
+        default:
+            next()
+        break;
     }
 })
 
