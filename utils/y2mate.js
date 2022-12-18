@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { default: axios } = require('axios');
 const cheerio = require('cheerio')
 const fetch = require('node-fetch')
 
@@ -17,18 +17,30 @@ function post(url, formdata) {
 
 
 function getVideoWithy2mate(link) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
         const ytIdRegex = /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:watch\?.*(?:|\&)v=|embed\/|v\/)|youtu\.be\/)([-_0-9A-Za-z]{11})/
-        let url = ytIdRegex.exec(link)
+        let ytlink_regex = ytIdRegex.exec(link)
+        let YT_ID = ytlink_regex[1]
         let configs = {
-            'url': 'https://www.youtube.be/' + url,
+            'url': 'https://www.youtube.com/watch?v=' + YT_ID,
             'q_auto': 0,
             'ajax': 1
         }
         let headerss = {
             "sec-ch-ua": '" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"',
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-            "Cookie": 'PHPSESSID=6jo2ggb63g5mjvgj45f612ogt7; _ga=GA1.2.405896420.1625200423; _gid=GA1.2.2135261581.1625200423; _PN_SBSCRBR_FALLBACK_DENIED=1625200785624; MarketGidStorage={"0":{},"C702514":{"page":5,"time":1625200846733}}'
+            "Cookie": "_gid=GA1.2.1565218017.1671296852; _ga=GA1.2.214241601.1671296852; prefetchAd_3381349=true; AdskeeperStorage=%7B%220%22%3A%7B%22svspr%22%3A%22https%3A%2F%2Fwww.google.com%2F%22%2C%22svsds%22%3A3%7D%2C%22C1351205%22%3A%7B%22page%22%3A1%2C%22time%22%3A1671356878603%7D%2C%22C1351206%22%3A%7B%22page%22%3A1%2C%22time%22%3A1671356855622%7D%7D; _ga_K8CD7CY0TZ=GS1.1.1671356878.3.0.1671356886.0.0.0",  // 'PHPSESSID=6jo2ggb63g5mjvgj45f612ogt7; _ga=GA1.2.405896420.1625200423; _gid=GA1.2.2135261581.1625200423; _PN_SBSCRBR_FALLBACK_DENIED=1625200785624; MarketGidStorage={"0":{},"C702514":{"page":5,"time":1625200846733}}',
+            "origin":" https://www.y2mate.com",
+            "referer": `https://www.y2mate.com/youtube/${YT_ID}`,
+            "sec-ch-ua": `"Not?A_Brand";v="8", "Chromium";v="108", "Google Chrome";v="108"`,
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": `"Windows"`,
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin",
+            "sec-gpc": 1,
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+            "x-requested-with": "XMLHttpRequest",
         }
         axios('https://www.y2mate.com/mates/en68/analyze/ajax', {
             method: 'POST',
@@ -50,7 +62,7 @@ function getVideoWithy2mate(link) {
                     let configs_mp4 = {
                         type: 'youtube',
                         _id: id,
-                        v_id: url[1],
+                        v_id: YT_ID,
                         ajax: 1,
                         token: '',
                         ftype: 'mp4',
@@ -91,16 +103,28 @@ function getVideoWithy2mate(link) {
 function getAudioWithy2mate(link) {
     return new Promise((resolve, reject) => {
         const ytIdRegex = /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:watch\?.*(?:|\&)v=|embed\/|v\/)|youtu\.be\/)([-_0-9A-Za-z]{11})/
-        let url = ytIdRegex.exec(link)
+        let ytlink_regex = ytIdRegex.exec(link)
+        let YT_ID = ytlink_regex[1]
         let configs = {
-            'url': 'https://www.youtube.be/' + url,
+            'url': 'https://www.youtube.com/watch?v=' + YT_ID,
             'q_auto': 0,
             'ajax': 1
         }
         let headerss = {
             "sec-ch-ua": '" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"',
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-            "Cookie": 'PHPSESSID=6jo2ggb63g5mjvgj45f612ogt7; _ga=GA1.2.405896420.1625200423; _gid=GA1.2.2135261581.1625200423; _PN_SBSCRBR_FALLBACK_DENIED=1625200785624; MarketGidStorage={"0":{},"C702514":{"page":5,"time":1625200846733}}'
+            "Cookie": "_gid=GA1.2.1565218017.1671296852; _ga=GA1.2.214241601.1671296852; prefetchAd_3381349=true; AdskeeperStorage=%7B%220%22%3A%7B%22svspr%22%3A%22https%3A%2F%2Fwww.google.com%2F%22%2C%22svsds%22%3A3%7D%2C%22C1351205%22%3A%7B%22page%22%3A1%2C%22time%22%3A1671356878603%7D%2C%22C1351206%22%3A%7B%22page%22%3A1%2C%22time%22%3A1671356855622%7D%7D; _ga_K8CD7CY0TZ=GS1.1.1671356878.3.0.1671356886.0.0.0",  // 'PHPSESSID=6jo2ggb63g5mjvgj45f612ogt7; _ga=GA1.2.405896420.1625200423; _gid=GA1.2.2135261581.1625200423; _PN_SBSCRBR_FALLBACK_DENIED=1625200785624; MarketGidStorage={"0":{},"C702514":{"page":5,"time":1625200846733}}',
+            "origin":" https://www.y2mate.com",
+            "referer": `https://www.y2mate.com/youtube/${YT_ID}`,
+            "sec-ch-ua": `"Not?A_Brand";v="8", "Chromium";v="108", "Google Chrome";v="108"`,
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": `"Windows"`,
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin",
+            "sec-gpc": 1,
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+            "x-requested-with": "XMLHttpRequest",
         }
         axios('https://www.y2mate.com/mates/en68/analyze/ajax', {
             method: 'POST',
@@ -125,7 +149,7 @@ function getAudioWithy2mate(link) {
                     let configs_mp3 = {
                         type: 'youtube',
                         _id: id,
-                        v_id: url[1],
+                        v_id: YT_ID,
                         ajax: 1,
                         token: '',
                         ftype: changeTypeAudio,
